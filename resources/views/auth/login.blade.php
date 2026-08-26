@@ -54,7 +54,7 @@
 <div class="login-card">
     <div class="text-center mb-4">
         <div class="brand-icon"><i class="bi bi-layers-fill"></i></div>
-        <h5 class="fw-700 mb-0">Bundle ERP</h5>
+        <h5 class="fw-700 mb-0">ERP Management</h5>
         <p class="text-muted" style="font-size:13px;">Apparel Manufacturing System</p>
     </div>
 

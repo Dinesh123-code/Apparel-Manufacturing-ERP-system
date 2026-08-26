@@ -12,7 +12,7 @@
             <form>
                 <div class="mb-3">
                     <label class="form-label font-weight-bold" style="font-size: 12px;">FACTORY NAME</label>
-                    <input type="text" class="form-control form-control-custom" value="Pro ERP Apparel Manufacturing Ltd.">
+                    <input type="text" class="form-control form-control-custom" value="ERP Management Apparel Manufacturing Ltd.">
                 </div>
                 <div class="mb-3">
                     <label class="form-label font-weight-bold" style="font-size: 12px;">CURRENCY SYMBOL</label>
