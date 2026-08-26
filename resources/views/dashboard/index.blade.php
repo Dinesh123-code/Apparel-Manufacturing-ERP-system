@@ -96,7 +96,13 @@
         <div class="card-custom p-4 h-100">
             <div class="d-flex align-items-center justify-content-between mb-3">
                 <h3 class="h6 font-weight-bold m-0" style="font-weight: 700; font-size: 15px;">Daily Production Volume</h3>
-                <i class="bi bi-three-dots-vertical text-muted"></i>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-link text-muted p-0" data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" onclick="showToast('Exporting production chart image...', 'info')"><i class="bi bi-download me-1"></i> Export Image</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="showToast('Chart refreshed with live production data.', 'success')"><i class="bi bi-arrow-repeat me-1"></i> Refresh Data</a></li>
+                    </ul>
+                </div>
             </div>
             <div style="height: 220px; position: relative;">
                 <canvas id="productionChart"></canvas>
@@ -139,6 +145,7 @@
                     <th style="padding: 10px 14px;">CURRENT STAGE</th>
                     <th style="padding: 10px 14px;">STATUS</th>
                     <th style="padding: 10px 14px;">LAST UPDATED</th>
+                    <th class="text-center" style="padding: 10px 14px;">ACTION</th>
                 </tr>
             </thead>
             <tbody>
@@ -173,9 +180,12 @@
                         </span>
                     </td>
                     <td style="padding: 12px 14px; color: #6b7280; font-size: 12px;">{{ $b->updated_at->diffForHumans() }}</td>
+                    <td class="text-center" style="padding: 12px 14px;">
+                        <a href="{{ route('bundles.show', $b) }}" class="btn btn-sm btn-light border p-1" title="View Bundle"><i class="bi bi-eye"></i></a>
+                    </td>
                 </tr>
                 @empty
-                <tr><td colspan="6" class="text-center py-4 text-muted">No recent bundle activity.</td></tr>
+                <tr><td colspan="7" class="text-center py-4 text-muted">No recent bundle activity.</td></tr>
                 @endforelse
             </tbody>
         </table>
