@@ -18,10 +18,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/me', [AuthController::class, 'me']);
 
-        // Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index']);
+        // Dashboard API
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('api.dashboard');
 
-        // Bundles CRUD
-        Route::apiResource('bundles', BundleController::class);
+        // Bundles CRUD API (prefixed names to prevent web collision)
+        Route::apiResource('bundles', BundleController::class)->names('api.bundles');
     });
 });
