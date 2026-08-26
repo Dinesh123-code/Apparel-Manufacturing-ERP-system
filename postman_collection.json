@@ -1,0 +1,216 @@
+{
+  "info": {
+    "name": "Bundle ERP API",
+    "description": "Production Bundle Management System — REST API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.collectionVariables.set('token', jsonData.token);",
+                  "    pm.environment.set('token', jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@bundle-erp.com\",\n  \"password\": \"password\"\n}"
+            },
+            "url": "{{base_url}}/login"
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/logout"
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/dashboard"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bundles",
+      "item": [
+        {
+          "name": "List Bundles",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bundles?per_page=20&sort=id&direction=desc",
+              "host": ["{{base_url}}"],
+              "path": ["bundles"],
+              "query": [
+                { "key": "per_page", "value": "20" },
+                { "key": "sort", "value": "id" },
+                { "key": "direction", "value": "desc" },
+                { "key": "search", "value": "", "disabled": true },
+                { "key": "buyer_id", "value": "", "disabled": true },
+                { "key": "style_id", "value": "", "disabled": true },
+                { "key": "line_id", "value": "", "disabled": true },
+                { "key": "date_from", "value": "", "disabled": true },
+                { "key": "date_to", "value": "", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Bundle",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bundle_no\": \"BND-TEST-001\",\n  \"buyer_id\": 1,\n  \"style_id\": 1,\n  \"color\": \"Navy Blue\",\n  \"size\": \"L\",\n  \"line_id\": 1,\n  \"quantity\": 100,\n  \"completed_qty\": 80,\n  \"rejected_qty\": 5,\n  \"operator_name\": \"John Smith\",\n  \"production_date\": \"2025-01-15\",\n  \"remarks\": \"Test bundle\"\n}"
+            },
+            "url": "{{base_url}}/bundles"
+          }
+        },
+        {
+          "name": "Get Bundle by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/bundles/1"
+          }
+        },
+        {
+          "name": "Update Bundle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bundle_no\": \"BND-TEST-001\",\n  \"buyer_id\": 1,\n  \"style_id\": 1,\n  \"color\": \"Black\",\n  \"size\": \"XL\",\n  \"line_id\": 2,\n  \"quantity\": 100,\n  \"completed_qty\": 95,\n  \"rejected_qty\": 3,\n  \"operator_name\": \"Jane Doe\",\n  \"production_date\": \"2025-01-15\",\n  \"remarks\": \"Updated bundle\"\n}"
+            },
+            "url": "{{base_url}}/bundles/1"
+          }
+        },
+        {
+          "name": "Delete Bundle",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/bundles/1"
+          }
+        },
+        {
+          "name": "List Bundles with Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bundles?search=BND-000001",
+              "host": ["{{base_url}}"],
+              "path": ["bundles"],
+              "query": [
+                { "key": "search", "value": "BND-000001" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Bundles with Filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bundles?buyer_id=1&date_from=2025-01-01&date_to=2025-12-31&per_page=50",
+              "host": ["{{base_url}}"],
+              "path": ["bundles"],
+              "query": [
+                { "key": "buyer_id", "value": "1" },
+                { "key": "date_from", "value": "2025-01-01" },
+                { "key": "date_to", "value": "2025-12-31" },
+                { "key": "per_page", "value": "50" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
