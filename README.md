@@ -53,7 +53,7 @@ A full-featured Production Bundle Management module built with **Laravel 12**, *
 
 ### Step 1: Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Dinesh123-code/bundle-erp.git
 cd bundle-erp
 ```
 
